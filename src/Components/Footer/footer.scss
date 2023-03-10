@@ -1,0 +1,19 @@
+.footer {
+    width: 100%;
+    height: 80px;
+    font-size: 13px;
+    padding: 0px 30px;
+    background-color: rgb(247, 247, 247);
+    display: flex;
+    justify-content: space-between;
+    .footer__copyright {
+        line-height: 40px;
+        margin-top: 20px;
+    }
+
+
+    .footer__contacts {
+        margin-top: 10px;
+        line-height: 18px;
+    }
+}

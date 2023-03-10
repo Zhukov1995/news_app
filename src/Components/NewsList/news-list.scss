@@ -1,0 +1,10 @@
+.news_list {
+    width: 95%;
+    margin: 0 auto;
+    list-style: none;
+    min-height: 1000px;
+    .news_list__end {
+        text-align: center;
+        margin-top: 50px;
+    }
+}
