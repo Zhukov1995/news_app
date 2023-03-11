@@ -1,3 +1,5 @@
+import { IDate } from "../actions/actions-interface"
+
 export interface IArrNews {
     by: string,
     descendants : number,
@@ -14,4 +16,8 @@ export interface IState {
     arrNewsID: number[],
     arrNews: IArrNews[]
     counterNews: number,
+    targetID: number,
+    targetDate: Date,
+    crutchTargetDate: IDate[],
+    disabledBtn: boolean,
 }

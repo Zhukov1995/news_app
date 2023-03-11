@@ -1,23 +1,52 @@
 import './news-list-item.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
-import { IArrNews } from '../../reducer/reducer-interface';
+import { IArrNews, IState } from '../../reducer/reducer-interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDisabledBtn, setTargetDate, setTargetID, saveTimeItemBetweenRender} from '../../actions/actions';
+import { Link } from 'react-router-dom';
+import { IDate } from '../../actions/actions-interface';
 
-const NewsListItem = ({title,score,by}: IArrNews) => {
-    
-    const [localTime] = useState(new Date());
+const NewsListItem = ({ title, score, by, id}: IArrNews) => {
+    const crutchTargetDate = useSelector<IState, IDate[]>(state => state.crutchTargetDate);
+    const arrNews = useSelector<IState,IArrNews[]>(state => state.arrNews);
+    const dispatch = useDispatch();
+    const [localTime,setLocalTime] = useState(new Date());
+
+    // костыль для времени новостного поста, в данном API нет корректного времени, пришлось делать костыль,и придумывать как перекидывать время между рендерами
+    useEffect(() => {
+        const findCopyItem = crutchTargetDate.filter(item => item.id === id);
+        if(findCopyItem.length <=1) {
+            const objDate: IDate = {id, date: new Date()}
+            dispatch(saveTimeItemBetweenRender(objDate));
+        } else {
+            crutchTargetDate.forEach(item => {
+                if(item?.id === id) {
+                    setLocalTime(item.date);
+                }
+            })
+        }
+        dispatch(setDisabledBtn(false));
+    },[])
+
+    const setTargetInfo = () => {
+        dispatch(setTargetID(id));
+        dispatch(setTargetDate(localTime));
+    }
 
     return (
-        <li className='news_list_item'>
-        <div className='news_list_item__title'>
-            <h3>{title}</h3>
-            <span><b>Rating:</b> {score}</span>
-        </div>
-        <div className='news_list_item__author'>
-            <span><b>Author:</b> {by}</span>
-            <span><b>Date:</b> <ReactTimeAgo date={localTime} locale="en-US"/></span>
-        </div>
-    </li>
+        <Link to='/item'>
+        <li className='news_list_item' onClick={() => setTargetInfo()}>
+            <div className='news_list_item__title'>
+                <h3>{title}</h3>
+                <span><b>Rating:</b> {score}</span>
+            </div>
+            <div className='news_list_item__author'>
+                <span><b>Author:</b> {by}</span>
+                <span><b>Date:</b> <ReactTimeAgo date={localTime} locale="en-US" /></span>
+            </div>
+        </li>
+        </Link>
     )
 }
 

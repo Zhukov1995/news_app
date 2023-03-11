@@ -5,11 +5,16 @@
   font-family: sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 .wrapper {
-  max-width: 100%;
+  width: 100%;
+  max-width: 1800px;
   min-width: 320px;
-  min-height: 100vh;
-  background-color: rgb(243,243,242);
+  min-height: 100vh; 
+  background-color: rgb(17,24,39);
   margin: 0 auto;
 }
 
