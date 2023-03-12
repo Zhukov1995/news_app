@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import NewsService from '../../service/NewsService';
+import NewsService from '../../../../service/NewsService';
 import ReactTimeAgo from 'react-time-ago';
-import { IArrNews, IState } from '../reducer/reducer-interface';
-import { setDisabledBtn } from '../actions/actions';
+import { IArrNews, IState } from '../../../reducer/reducer-interface';
+import { setDisabledBtn, setParentComentsID } from '../../../actions/actions';
 import './item-page.scss';
+import ItemComents from './ItemComents/item-coments';
 
 const ItemPage = () => {
     const [targetNews,setTargetNews] = useState<IArrNews>();
@@ -17,7 +18,13 @@ const ItemPage = () => {
 
     useEffect(() => {
         arrNews.forEach(item => {
-            if(item?.id === targetID) setTargetNews(item);
+            if(item?.id === targetID) {
+                setTargetNews(item);
+                if(item.kids !== undefined) {
+                    console.log(item.kids);
+                    dispatch(setParentComentsID(item.kids));
+                }
+            }
         });
         dispatch(setDisabledBtn(true));
     },[])
@@ -35,6 +42,7 @@ const ItemPage = () => {
                     <span><b>Date:</b> <ReactTimeAgo date={targetDate} locale="en-US" /></span>
                 </div>
                 <a className='item_page__url' href={targetNews?.url}>Link to the source</a>
+                <ItemComents/>
             </div>
         </div>
     )

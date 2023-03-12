@@ -21,6 +21,11 @@ class NewsService {
         return res;
     }
 
+    getComentForId = async (id: string) => {
+        const res = await this.getResours(`${this._apiBase}item/${id}.json?print=pretty`);
+        return res;
+    }
+
 }
 
 export default NewsService;

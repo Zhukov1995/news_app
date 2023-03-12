@@ -16,8 +16,25 @@ export interface IState {
     arrNewsID: number[],
     arrNews: IArrNews[]
     counterNews: number,
+    counterParentComents: number;
     targetID: number,
     targetDate: Date,
+    ParentComentsArrID: number[],
+    ChildrenComentsArrID: number[],
+    ParentComentsArr: IComent[],
+    ChildrenComentsArr: IComent[],
     crutchTargetDate: IDate[],
     disabledBtn: boolean,
+}
+
+
+
+export interface IComent {
+    by: string,
+    id: number,
+    kids?: number[],
+    parent: number,
+    text: string,
+    time: number,
+    type: string,
 }

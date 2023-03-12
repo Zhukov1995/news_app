@@ -9,7 +9,7 @@ import { errorProcessing } from '../../utils/errorProcessing';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.scss';
-import ItemPage from '../ItemPage/item-page';
+import ItemPage from '../NewsList/NewsListItem/ItemPage/item-page';
 import { IState } from '../reducer/reducer-interface';
 
 function App() {
