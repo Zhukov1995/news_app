@@ -3,7 +3,7 @@ import NewsListItem from './NewsListItem/news-list-item';
 import NewsService from '../../service/NewsService';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewNews, deleteOldNews, incCounterNews } from '../actions/actions';
+import { addNewNews, deleteOldNews, incCounterNews, resetCounterNews, setFlagCounterNews } from '../actions/actions';
 import { IArrNews, IState } from '../reducer/reducer-interface';
 import { errorProcessing } from '../../utils/errorProcessing';
 
@@ -12,6 +12,7 @@ const NewsList = () => {
     const arrNews = useSelector<IState, IArrNews[]>(state => state.arrNews);
     const arrID = useSelector<IState, number[]>(state => state.arrNewsID);
     const counterNews = useSelector<IState, number>(state => state.counterNews);
+    const flagCounter = useSelector<IState,boolean>(state => state.flagCounterNews);
     const dispatch = useDispatch();
 
     const newsService = new NewsService();
@@ -25,20 +26,22 @@ const NewsList = () => {
     }
 
     // запускаем таймер где каждую минуту будет появляться новая новость
-    // когда доходим до конца массива,останавливаем счетчик и перестаем удалять элементы
+    // когда доходим до 100 новостей,начинаем удалять последние,если достигаем лимита новостей 498,обнуляем counter и дальше показываем новости
     useEffect(() => {
         const timer = setInterval(() => {
-            dispatch(incCounterNews())
+            dispatch(incCounterNews());
             getNewsEveryMinute(arrID);
+            if (counterNews > 100 || flagCounter && counterNews <= 498) dispatch(deleteOldNews());
+            if(counterNews === 498) {
+                dispatch(resetCounterNews());
+                dispatch(setFlagCounterNews(true));
+            }
         }, 60000);
-        if (counterNews > 498) clearInterval(timer);
-        if (counterNews > 100 && counterNews <= 498) dispatch(deleteOldNews());
-
         return () => {
             clearInterval(timer);
         }
     }, [counterNews]);
-
+    
     const showNewsList: JSX.Element[] = arrNews.filter(item => item !== null).map(item => {
         return <NewsListItem {...item} key={item.id}/>
     });

@@ -1,13 +1,13 @@
-import { countReset } from 'console';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NewsService from '../../../../../service/NewsService';
 import { errorProcessing } from '../../../../../utils/errorProcessing';
 import { incParentCounter,
          resetParentComentsArr, 
+         resetParentComentsArrID, 
          resetParentCounter, 
          setParentComentsArr,
-         setParentComentsID } from '../../../../actions/actions';
+         setParentComentsArrID } from '../../../../actions/actions';
 import { IComent, IState } from '../../../../reducer/reducer-interface';
 import './item-coments.scss';
 
@@ -22,44 +22,37 @@ const ItemComents = () => {
 
     // функция получает id коментария,делает по нему запрос и записывает в массив 
     const getParentComents = () => {
-        if(ParentComentsArrID.length > 0) {
             const id = String(ParentComentsArrID[counterParentComents]);
-            console.log(id);
             newsService.getComentForId(id)
-                .then(res => {
-                    if(res !== undefined) {
-                        dispatch(incParentCounter());
-                        dispatch(setParentComentsArr(res))
-                    } else {
-                        console.log('Error');
-                    }
-                    
-                } )
+                .then(res => { dispatch(setParentComentsArr(res))})
                 .catch(e => errorProcessing(e));
         }
-    }
 
+    //  вот тут я запутался,и пока не понимаю,какие я должен использовать зависимости,чтобы таймер работал корректно.
+    // он либо не останавливается,либо вообще не работает
+     
+    useEffect(() => {
+            const timer = setInterval(() => {
+                dispatch(incParentCounter());
+                console.log(counterParentComents);
+                    getParentComents();           
+            }, 1000);
+            if(counterParentComents >= ParentComentsArrID.length) {
+                clearInterval(timer);
+            }
+            return () => {
+                clearInterval(timer);
+            }
+    }, [counterParentComents,ParentComentsArrID.length]);
 
     useEffect(() => {
-        if(ParentComentsArrID.length) {
-            const timer = setInterval(() => {
-                console.log('interval')
-                getParentComents();
-                if(ParentComentsArrID.length === ParentComentsArr.length) {
-                    clearInterval(timer);
-                    console.log('stop!!!')
-                    console.log(ParentComentsArrID.length > ParentComentsArr.length)
-                }
-            }, 4000);
-            
-            return () => {
-                // clearInterval(timer);
-                dispatch(resetParentComentsArr());
-                dispatch(setParentComentsID([]));
+        return () => {
+                console.log('размонтирован');
+                dispatch(resetParentComentsArrID());
                 dispatch(resetParentCounter());
-            }
+                dispatch(resetParentComentsArr());
         }
-    }, [ParentComentsArrID.length,ParentComentsArr.length,counterParentComents]);
+    },[])
 
     const showComentsList = ParentComentsArr.map((item,index) => {
         return <li className='coments__list__parent' key={index}>

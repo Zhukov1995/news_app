@@ -16,6 +16,7 @@ export interface IState {
     arrNewsID: number[],
     arrNews: IArrNews[]
     counterNews: number,
+    flagCounterNews: boolean,
     counterParentComents: number;
     targetID: number,
     targetDate: Date,

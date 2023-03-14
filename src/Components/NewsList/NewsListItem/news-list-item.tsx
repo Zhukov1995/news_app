@@ -3,30 +3,36 @@ import { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
 import { IArrNews, IState } from '../../reducer/reducer-interface';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisabledBtn, setTargetDate, setTargetID, saveTimeItemBetweenRender} from '../../actions/actions';
+import { setDisabledBtn, setTargetDate, setTargetID, setCrutchTargetDateArr, resetCounterNews} from '../../actions/actions';
 import { Link } from 'react-router-dom';
 import { IDate } from '../../actions/actions-interface';
 
 const NewsListItem = ({ title, score, by, id}: IArrNews) => {
     const crutchTargetDate = useSelector<IState, IDate[]>(state => state.crutchTargetDate);
-    const arrNews = useSelector<IState,IArrNews[]>(state => state.arrNews);
+    const counterNews = useSelector<IState,number>(state => state.counterNews);
     const dispatch = useDispatch();
     const [localTime,setLocalTime] = useState(new Date());
 
     // костыль для времени новостного поста, в данном API нет корректного времени, пришлось делать костыль,и придумывать как перекидывать время между рендерами
     useEffect(() => {
         const findCopyItem = crutchTargetDate.filter(item => item.id === id);
-        if(findCopyItem.length <=1) {
+        if(findCopyItem.length <1) {
             const objDate: IDate = {id, date: new Date()}
-            dispatch(saveTimeItemBetweenRender(objDate));
+            dispatch(setCrutchTargetDateArr(objDate));
         } else {
             crutchTargetDate.forEach(item => {
                 if(item?.id === id) {
                     setLocalTime(item.date);
-                }
+                } 
             })
         }
         dispatch(setDisabledBtn(false));
+    },[])
+
+    useEffect(() => {
+        if(counterNews === 498) {
+            dispatch(resetCounterNews());
+        }
     },[])
 
     const setTargetInfo = () => {
