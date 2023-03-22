@@ -25,3 +25,36 @@
     }
 
 }
+
+@media(max-width: 900px) {
+    .news_list_item {
+        padding: 15px;
+    }
+    .news_list_item__title h3 { 
+        font-size: 17px;
+        display: inline-block;
+        width: 80%;
+    }
+    .news_list_item__author {
+        margin-top: 20px;
+        width: 100%;
+        font-size: 15px;
+    }
+}
+
+@media(max-width: 500px) {
+    .news_list_item__title {
+        flex-flow: column;
+        h3 {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+@media(max-width: 500px) {
+    .news_list_item__author {
+        flex-flow: column;
+        line-height: 20px;
+    }
+}

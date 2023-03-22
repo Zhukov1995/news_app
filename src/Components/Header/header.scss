@@ -42,3 +42,15 @@
 
 }
 
+@media(max-width: 500px) {
+    .header {
+        padding: 0px 5px;
+        .header__logo {
+            font-size: 23px;
+        }
+        .header__btn {
+            width: 120px;
+        }
+    }
+}
+

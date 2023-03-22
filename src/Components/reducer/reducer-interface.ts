@@ -21,9 +21,7 @@ export interface IState {
     targetID: number,
     targetDate: Date,
     ParentComentsArrID: number[],
-    ChildrenComentsArrID: number[],
     ParentComentsArr: IComent[],
-    ChildrenComentsArr: IComent[],
     crutchTargetDate: IDate[],
     disabledBtn: boolean,
 }

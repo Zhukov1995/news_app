@@ -12,9 +12,7 @@ const initialState : IState = {
     targetID: 0,
     targetDate: new Date(),
     ParentComentsArrID: [],
-    ChildrenComentsArrID: [],
     ParentComentsArr: [],
-    ChildrenComentsArr: [],
     crutchTargetDate: [],
     disabledBtn: false,
 }
@@ -66,8 +64,6 @@ const reducer = (state = initialState,action: IAction) => {
         default: return state;
     }
 }
-
-
 
 
 export default reducer;

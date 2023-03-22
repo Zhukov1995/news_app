@@ -51,3 +51,44 @@
         }
     }
 }
+
+
+
+@media(max-width: 900px) {
+    .item_page__title h3{
+        font-size: 17px;
+            width: 80%;
+    }
+}
+
+@media(max-width: 600px) {
+    .item_page {
+        padding: 0px;
+        .item_page__wrapper {
+            width: 90%;
+        }
+    }
+
+}
+
+@media(max-width: 400px) {
+    .item_page {
+        .item_page__wrapper {
+            .item_page__title {
+                flex-flow: column;
+                h3 {
+                    width: 100%;
+                }
+            }
+            .item_page__author {
+                line-height: 25px;
+                margin-top: 50px;
+                flex-flow: column;
+            }
+            .item_page__url {
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
