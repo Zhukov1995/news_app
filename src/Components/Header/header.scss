@@ -4,22 +4,24 @@
     padding: 0px 10px;
     display: flex;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
     background-color: rgb(17,24,39);
-    border: 1px solid rgba(113, 113, 113, 0.321);
+    border-bottom: 1px solid rgba(113, 113, 113, 0.321);
     .header__logo {
         font-size: 25px;
         background: linear-gradient(135deg, rgb(34,196,96) 20%, rgb(141,97,247) 70%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         display: inline-block;
-        padding-top: 14px;
+        padding-top: 18px;
         cursor: pointer;
     }
     .header__btn {
-        width: 150px;
+        width: 120px;
         height: 40px;
         margin-top: 10px;
-        font-weight: 500;
+        font-size: 15px;
         border: none;
         color: white;
         background-color: transparent;
@@ -32,25 +34,12 @@
     .header__btn__disabled {
         text-decoration: line-through;
         color: rgb(84, 84, 84);
-        width: 150px;
+        width: 120px;
         height: 40px;
         margin-top: 10px;
-        font-weight: 500;
+        font-size: 15px;
         border: none;
         background-color: transparent;
     }
 
 }
-
-@media(max-width: 500px) {
-    .header {
-        padding: 0px 5px;
-        .header__logo {
-            font-size: 23px;
-        }
-        .header__btn {
-            width: 120px;
-        }
-    }
-}
-

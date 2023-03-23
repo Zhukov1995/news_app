@@ -1,9 +1,9 @@
 .item_page {
     width: 95%;
-    min-height: 100vh;
+    min-height: 80vh;
     padding: 20px 20px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 60px;
     margin-bottom: 20px;
     border-radius: 20px;
     border: 1px solid rgba(155, 155, 155, 0.321);
@@ -11,11 +11,11 @@
     box-shadow: 0px 5px 10px 2px rgba(34, 94, 140, 0.349);
     color: white;
     .item_page__wrapper {
-        width: 70%;
+        width: 80%;
+        max-width: 1000px;
         margin: 0 auto;
-        margin-top: 20px;
         .item_page__back {
-            color: white;
+            color: rgb(165, 164, 163);
         }
         .item_page__back:hover {
                 color: rgb(193,241,255);
@@ -25,17 +25,18 @@
             width: 100%;
             display: flex;
             margin-top: 20px;
-            border-bottom: 1px solid rgba(113, 113, 113, 0.321);
             line-height: 40px;
             justify-content: space-between;
+            h3 {
+                font-size: 23px;
+            }
         }
         .item_page__author {
-            margin-top: 150px;
+            margin-top: 50px;
             display: flex;
             justify-content: space-between;
             span {
                 display: inline-block;
-                border-bottom: 1px solid rgba(113, 113, 113, 0.321);
             }
         }
         .item_page__url {
@@ -43,51 +44,10 @@
             text-decoration: none;
             color: rgb(165, 164, 163);
             font-size: 15px;
-            margin-top: 100px;
+            margin-top: 50px;
             margin-bottom: 50px;
             &:hover {
                 color: rgb(193,241,255);
-            }
-        }
-    }
-}
-
-
-
-@media(max-width: 900px) {
-    .item_page__title h3{
-        font-size: 17px;
-            width: 80%;
-    }
-}
-
-@media(max-width: 600px) {
-    .item_page {
-        padding: 0px;
-        .item_page__wrapper {
-            width: 90%;
-        }
-    }
-
-}
-
-@media(max-width: 400px) {
-    .item_page {
-        .item_page__wrapper {
-            .item_page__title {
-                flex-flow: column;
-                h3 {
-                    width: 100%;
-                }
-            }
-            .item_page__author {
-                line-height: 25px;
-                margin-top: 50px;
-                flex-flow: column;
-            }
-            .item_page__url {
-                margin-top: 30px;
-                margin-bottom: 20px;
             }
         }
     }

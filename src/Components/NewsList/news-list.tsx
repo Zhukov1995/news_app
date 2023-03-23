@@ -1,20 +1,26 @@
-import './news-list.scss';
 import NewsListItem from './NewsListItem/news-list-item';
 import NewsService from '../../service/NewsService';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewNews, deleteOldNews, incCounterNews, resetCounterNews, setFlagCounterNews } from '../actions/actions';
+import {
+    addNewNews,
+    deleteOldNews,
+    incCounterNews,
+    resetCounterNews,
+    setFlagCounterNews
+} from '../actions/actions';
 import { IArrNews, IState } from '../reducer/reducer-interface';
 import { errorProcessing } from '../../utils/errorProcessing';
+import './news-list.scss';
 
 
 const NewsList = () => {
     const arrNews = useSelector<IState, IArrNews[]>(state => state.arrNews);
     const arrID = useSelector<IState, number[]>(state => state.arrNewsID);
     const counterNews = useSelector<IState, number>(state => state.counterNews);
-    const flagCounter = useSelector<IState,boolean>(state => state.flagCounterNews);
+    const flagCounter = useSelector<IState, boolean>(state => state.flagCounterNews);
+    const [delay, setDelay] = useState<number>(1500);
     const dispatch = useDispatch();
-
     const newsService = new NewsService();
 
     // функция принимает в себя массив с идентификаторами,делает по нему запрос и записывает в state
@@ -32,18 +38,19 @@ const NewsList = () => {
             dispatch(incCounterNews());
             getNewsEveryMinute(arrID);
             if (counterNews > 100 || flagCounter && counterNews <= 498) dispatch(deleteOldNews());
-            if(counterNews === 498) {
+            if (counterNews === 498) {
                 dispatch(resetCounterNews());
                 dispatch(setFlagCounterNews(true));
             }
-        }, 60000);
+        }, delay);
+        if (counterNews >= 19) setDelay(60000);
         return () => {
             clearInterval(timer);
         }
     }, [counterNews]);
-    
+
     const showNewsList: JSX.Element[] = arrNews.filter(item => item !== null).map(item => {
-        return <NewsListItem {...item} key={item.id}/>
+        return <NewsListItem {...item} key={item.id} />
     });
 
 

@@ -1,4 +1,5 @@
 import './footer.scss';
+import './footer.media.scss';
 
 const Footer = () => {
     return (

@@ -1,0 +1,31 @@
+@media(max-width: 900px) {
+    .news_list_item {
+        padding: 15px;
+        .news_list_item__title h3 { 
+            display: inline-block;
+            width: 80%;
+        }
+        .news_list_item__author {
+            width: 100%;
+            font-size: 17px;
+        }
+    }
+}
+
+@media(max-width: 500px) {
+    .news_list_item {
+        .news_list_item__title {
+            flex-flow: column;
+            h3 {
+                font-size: 22px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        .news_list_item__author {
+            flex-flow: column;
+            line-height: 30px;
+            margin-top: 25px;
+        }
+    }
+}
